@@ -24,10 +24,14 @@ public class PartidaXadrex {
 		return mat;
 	}
 	
+	private void colocarNovaPeca(char coluna, int linha, PecaXadrex peca) {
+		tabuleiro.ColocarPeca(peca,new PosicaoXadrex(coluna, linha).toPosicao());
+	}
+	
 	private void configuracaoInicial() {
-		tabuleiro.ColocarPeca(new Torre(tabuleiro, Cor.BRANCO), new Posicao(2, 1));
-		tabuleiro.ColocarPeca(new Rei(tabuleiro, Cor.PRETO), new Posicao(0, 4));
-		tabuleiro.ColocarPeca(new Rei(tabuleiro, Cor.BRANCO), new Posicao(7, 4));
+		colocarNovaPeca('b',6, new Torre(tabuleiro, Cor.BRANCO));
+		colocarNovaPeca('e', 8, new Rei(tabuleiro, Cor.PRETO));
+		colocarNovaPeca('e', 1, new Rei(tabuleiro, Cor.BRANCO));
 		
 	}
 }
