@@ -1,6 +1,9 @@
 package xadrex;
 
+import tabuleiro.Posicao;
 import tabuleiro.Tabuleiro;
+import xadrex.pecas.Rei;
+import xadrex.pecas.Torre;
 
 public class PartidaXadrex {
 
@@ -8,6 +11,7 @@ public class PartidaXadrex {
 
 	public PartidaXadrex() {
 		tabuleiro = new Tabuleiro(8, 8);
+		configuracaoInicial();
 	}
 
 	public PecaXadrex[][] getPecas() {
@@ -18,5 +22,12 @@ public class PartidaXadrex {
 			}
 		}
 		return mat;
+	}
+	
+	private void configuracaoInicial() {
+		tabuleiro.ColocarPeca(new Torre(tabuleiro, Cor.BRANCO), new Posicao(2, 1));
+		tabuleiro.ColocarPeca(new Rei(tabuleiro, Cor.PRETO), new Posicao(0, 4));
+		tabuleiro.ColocarPeca(new Rei(tabuleiro, Cor.BRANCO), new Posicao(7, 4));
+		
 	}
 }
