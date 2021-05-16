@@ -23,7 +23,12 @@ public class Program {
 
 				System.out.print("Selecione a peca: ");
 				PosicaoXadrex origem = UI.lerPosicaoXadrex(sc);
-
+				
+				boolean [][] movimentosPossiveis = partida.movimentosPossiveis(origem);
+				UI.limparTela();
+				UI.printTabuleiro(partida.getPecas(), movimentosPossiveis);
+				
+				System.out.println();
 				System.out.print("Informe a posicao de destino: ");
 				PosicaoXadrex destino = UI.lerPosicaoXadrex(sc);
 

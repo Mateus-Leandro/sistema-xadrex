@@ -25,38 +25,43 @@ public class PartidaXadrex {
 		return mat;
 	}
 
+	public boolean[][] movimentosPossiveis(PosicaoXadrex origem) {
+		Posicao posicao = origem.toPosicao();
+		validarPosicaoOrigem(posicao);
+		return tabuleiro.peca(posicao).movimentosPossiveis();
+	}
+
 	public PecaXadrex performMoverPeca(PosicaoXadrex posicaoOrigem, PosicaoXadrex posicaoDestino) {
 		Posicao origem = posicaoOrigem.toPosicao();
 		Posicao destino = posicaoDestino.toPosicao();
 		validarPosicaoOrigem(origem);
 		validarPosicaoDestino(origem, destino);
 		Peca capturaPeca = moverPeca(origem, destino);
-		return (PecaXadrex)capturaPeca;
+		return (PecaXadrex) capturaPeca;
 	}
-	
+
 	private Peca moverPeca(Posicao origem, Posicao destino) {
 		Peca p = tabuleiro.removerPeca(origem);
 		Peca peca_capturada = tabuleiro.removerPeca(destino);
 		tabuleiro.ColocarPeca(p, destino);
 		return peca_capturada;
 	}
-	
+
 	private void validarPosicaoOrigem(Posicao posicao) {
 		if (!tabuleiro.possuiPecaPosicao(posicao)) {
 			throw new ExcecoesXadrex("Nao existe peca nesta posicao!");
 		}
-		if(!tabuleiro.peca(posicao).existePossibilidadeMovimento()) {
+		if (!tabuleiro.peca(posicao).existePossibilidadeMovimento()) {
 			throw new ExcecoesXadrex("Nao existe movimentos possiveis para a peca escolhida");
 		}
 	}
-	
+
 	private void validarPosicaoDestino(Posicao origem, Posicao destino) {
-		if(!tabuleiro.peca(origem).movimentosPossiveis(destino)) {
+		if (!tabuleiro.peca(origem).movimentosPossiveis(destino)) {
 			throw new ExcecoesXadrex("A peca escolhida nao pode se mover para a posicao de destino!");
 		}
 	}
-	
-	
+
 	private void colocarNovaPeca(char coluna, int linha, PecaXadrex peca) {
 		tabuleiro.ColocarPeca(peca, new PosicaoXadrex(coluna, linha).toPosicao());
 	}
