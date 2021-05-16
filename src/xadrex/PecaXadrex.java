@@ -1,6 +1,7 @@
 package xadrex;
 
 import tabuleiro.Peca;
+import tabuleiro.Posicao;
 import tabuleiro.Tabuleiro;
 
 public abstract class PecaXadrex extends Peca{
@@ -14,6 +15,11 @@ public abstract class PecaXadrex extends Peca{
 
 	public Cor getCor() {
 		return cor;
+	}
+	
+	protected boolean pecaDoOponente(Posicao posicao) {
+		PecaXadrex p = (PecaXadrex) getTabuleiro().peca(posicao);
+		return p != null && p.getCor() != cor;
 	}
 
 }
