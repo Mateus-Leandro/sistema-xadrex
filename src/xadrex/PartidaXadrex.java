@@ -44,6 +44,9 @@ public class PartidaXadrex {
 		if (!tabuleiro.possuiPecaPosicao(posicao)) {
 			throw new ExcecoesXadrex("Nao existe peca nesta posicao!");
 		}
+		if(!tabuleiro.peca(posicao).existePossibilidadeMovimento()) {
+			throw new ExcecoesXadrex("Nao existe movimentos possiveis para a peca escolhida");
+		}
 	}
 	
 	

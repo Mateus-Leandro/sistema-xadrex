@@ -3,7 +3,7 @@ package xadrex;
 import tabuleiro.Peca;
 import tabuleiro.Tabuleiro;
 
-public class PecaXadrex extends Peca{
+public abstract class PecaXadrex extends Peca{
 	
 	private Cor cor;
 
