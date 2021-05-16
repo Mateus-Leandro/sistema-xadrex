@@ -1,7 +1,9 @@
 package aplicacao;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import xadrex.ExcecoesXadrex;
 import xadrex.PartidaXadrex;
 import xadrex.PecaXadrex;
 import xadrex.PosicaoXadrex;
@@ -12,18 +14,27 @@ public class Program {
 
 		Scanner sc = new Scanner(System.in);
 		PartidaXadrex partida = new PartidaXadrex();
-		
-		while(true) {
-			UI.printTabuleiro(partida.getPecas());
-			System.out.println();
-			
-			System.out.print("Selecione a peca: ");
-			PosicaoXadrex origem = UI.lerPosicaoXadrex(sc);
-			
-			System.out.print("Informe a posicao de destino: ");
-			PosicaoXadrex destino = UI.lerPosicaoXadrex(sc);
-			
-			PecaXadrex pecaCapturada = partida.performMoverPeca(origem, destino);
+
+		while (true) {
+			try {
+				UI.limparTela();
+				UI.printTabuleiro(partida.getPecas());
+				System.out.println();
+
+				System.out.print("Selecione a peca: ");
+				PosicaoXadrex origem = UI.lerPosicaoXadrex(sc);
+
+				System.out.print("Informe a posicao de destino: ");
+				PosicaoXadrex destino = UI.lerPosicaoXadrex(sc);
+
+				PecaXadrex pecaCapturada = partida.performMoverPeca(origem, destino);
+			} catch (ExcecoesXadrex e) {
+				System.out.println(e.getMessage());
+				sc.nextLine();
+			} catch (InputMismatchException e) {
+				System.out.println(e.getMessage());
+				sc.nextLine();
+			}
 		}
 	}
 }
