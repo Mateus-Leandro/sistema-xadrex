@@ -1,5 +1,7 @@
 package xadrex;
 
+import tabuleiro.Peca;
+import tabuleiro.Posicao;
 import tabuleiro.Tabuleiro;
 import xadrex.pecas.Rei;
 import xadrex.pecas.Torre;
@@ -23,6 +25,28 @@ public class PartidaXadrex {
 		return mat;
 	}
 
+	public PecaXadrex performMoverPeca(PosicaoXadrex posicaoOrigem, PosicaoXadrex posicaoDestino) {
+		Posicao origem = posicaoOrigem.toPosicao();
+		Posicao destino = posicaoDestino.toPosicao();
+		validarPosicaoOrigem(origem);
+		Peca capturaPeca = moverPeca(origem, destino);
+		return (PecaXadrex)capturaPeca;
+	}
+	
+	private Peca moverPeca(Posicao origem, Posicao destino) {
+		Peca p = tabuleiro.removerPeca(origem);
+		Peca peca_capturada = tabuleiro.removerPeca(destino);
+		tabuleiro.ColocarPeca(p, destino);
+		return peca_capturada;
+	}
+	
+	private void validarPosicaoOrigem(Posicao posicao) {
+		if (!tabuleiro.possuiPecaPosicao(posicao)) {
+			throw new ExcecoesXadrex("Nao existe peca nesta posicao!");
+		}
+	}
+	
+	
 	private void colocarNovaPeca(char coluna, int linha, PecaXadrex peca) {
 		tabuleiro.ColocarPeca(peca, new PosicaoXadrex(coluna, linha).toPosicao());
 	}

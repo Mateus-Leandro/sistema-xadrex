@@ -9,7 +9,7 @@ public class Tabuleiro {
 	public Tabuleiro(int linhas, int colunas) {
 		if (linhas < 1 || colunas < 1) {
 			throw new ExcecoesTabuleiro(
-					"Erro ao criar tabuleiro: É necessário que exist" + " pelo menos uma linha e uma coluna");
+					"Erro ao criar tabuleiro: É necessario que exista" + " pelo menos uma linha e uma coluna");
 		}
 		this.linhas = linhas;
 		this.colunas = colunas;
@@ -40,10 +40,24 @@ public class Tabuleiro {
 
 	public void ColocarPeca(Peca peca, Posicao posicao) {
 		if (possuiPecaPosicao(posicao)) {
-			throw new ExcecoesTabuleiro("Ja existe uma peça na posição: " + posicao);
+			throw new ExcecoesTabuleiro("Ja existe uma peça na posicao: " + posicao);
 		}
 		pecas[posicao.getLinha()][posicao.getColuna()] = peca;
 		peca.posicao = posicao;
+	}
+	
+	public Peca removerPeca(Posicao posicao) {
+		if(!existePosicao(posicao)) {
+			throw new ExcecoesTabuleiro("Essa posicao nao existe no tabuleiro! ");
+		}
+		if(peca(posicao) == null) {
+			return null;
+		}
+		
+		Peca aux = peca(posicao);
+		aux.posicao = null;
+		pecas[posicao.getLinha()][posicao.getColuna()] = null;
+		return aux;
 	}
 
 	private boolean existePosicao(int linha, int coluna) {
