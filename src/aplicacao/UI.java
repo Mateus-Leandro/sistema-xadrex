@@ -4,6 +4,7 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import xadrex.Cor;
+import xadrex.PartidaXadrex;
 import xadrex.PecaXadrex;
 import xadrex.PosicaoXadrex;
 
@@ -28,15 +29,13 @@ public class UI {
 	public static final String ANSI_PURPLE_BACKGROUND = "\u001B[45m";
 	public static final String ANSI_CYAN_BACKGROUND = "\u001B[46m";
 	public static final String ANSI_WHITE_BACKGROUND = "\u001B[47m";
-	
-	
-	// https://stackoverflow.com/questions/2979383/java-clear-the-console
-		public static void limparTela() {
-			System.out.print("\033[H\033[2J");
-			System.out.flush();
-		}
 
-		
+	// https://stackoverflow.com/questions/2979383/java-clear-the-console
+	public static void limparTela() {
+		System.out.print("\033[H\033[2J");
+		System.out.flush();
+	}
+
 	public static PosicaoXadrex lerPosicaoXadrex(Scanner sc) {
 		try {
 			String s = sc.nextLine();
@@ -44,9 +43,14 @@ public class UI {
 			int linha = Integer.parseInt(s.substring(1));
 			return new PosicaoXadrex(coluna, linha);
 		} catch (RuntimeException e) {
-			throw new InputMismatchException("Erro ao ler posicao!" 
-					+ " Valores validos sao de A1 ata H8");
+			throw new InputMismatchException("Erro ao ler posicao!" + " Valores validos sao de A1 ata H8");
 		}
+	}
+
+	public static void printPartida(PartidaXadrex partida) {
+		printTabuleiro(partida.getPecas());
+		System.out.println("\nTurno: " + partida.getTurno());
+		System.out.print("Esperando jogador: " + partida.getJogadorAtual());
 	}
 
 	public static void printTabuleiro(PecaXadrex[][] pecas) {
@@ -59,8 +63,8 @@ public class UI {
 		}
 		System.out.println("  a b c d e f g h");
 	}
-	
-	public static void printTabuleiro(PecaXadrex[][] pecas, boolean [][] movimentosPossiveis) {
+
+	public static void printTabuleiro(PecaXadrex[][] pecas, boolean[][] movimentosPossiveis) {
 		for (int l = 0; l < pecas.length; l++) {
 			System.out.print((8 - l) + " ");
 			for (int c = 0; c < pecas.length; c++) {
@@ -70,10 +74,9 @@ public class UI {
 		}
 		System.out.println("  a b c d e f g h");
 	}
-	
 
 	private static void printPeca(PecaXadrex peca, boolean background) {
-		if(background) {
+		if (background) {
 			System.out.print(ANSI_BLUE_BACKGROUND);
 		}
 		if (peca == null) {
