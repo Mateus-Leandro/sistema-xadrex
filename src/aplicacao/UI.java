@@ -1,5 +1,6 @@
 package aplicacao;
 
+import java.awt.Checkbox;
 import java.util.Arrays;
 import java.util.InputMismatchException;
 import java.util.List;
@@ -10,6 +11,7 @@ import xadrex.Cor;
 import xadrex.PartidaXadrex;
 import xadrex.PecaXadrex;
 import xadrex.PosicaoXadrex;
+import xadrex.pecas.Rei;
 
 public class UI {
 
@@ -51,15 +53,20 @@ public class UI {
 	}
 
 	public static void printPartida(PartidaXadrex partida, List<PecaXadrex> capturadas) {
-		printTabuleiro(partida.getPecas());
+		printTabuleiro(partida.getPecas(), partida.getcheck());
 		System.out.println();
 		printPecasCapturadas(capturadas);
 		System.out.println();
 		System.out.println("Turno: " + partida.getTurno());
-		System.out.print("Esperando jogador: " + partida.getJogadorAtual());
+		System.out.println("Esperando jogador: " + partida.getJogadorAtual());
+		if (partida.getcheck()) {
+			System.out.println(ANSI_RED_BACKGROUND);
+			System.out.print("CHECK!");
+			System.out.println(ANSI_RESET);
+		}
 	}
 
-	public static void printTabuleiro(PecaXadrex[][] pecas) {
+	public static void printTabuleiro(PecaXadrex[][] pecas, boolean check) {
 		for (int l = 0; l < pecas.length; l++) {
 			System.out.print((8 - l) + " ");
 			for (int c = 0; c < pecas.length; c++) {
@@ -85,6 +92,7 @@ public class UI {
 		if (background) {
 			System.out.print(ANSI_BLUE_BACKGROUND);
 		}
+
 		if (peca == null) {
 			System.out.print("-" + ANSI_RESET);
 		}
@@ -101,11 +109,12 @@ public class UI {
 
 		System.out.print(" ");
 	}
-	
+
 	private static void printPecasCapturadas(List<PecaXadrex> capturadas) {
-		List<PecaXadrex> brancas = capturadas.stream().filter(x -> x.getCor() == Cor.BRANCO).collect(Collectors.toList());
+		List<PecaXadrex> brancas = capturadas.stream().filter(x -> x.getCor() == Cor.BRANCO)
+				.collect(Collectors.toList());
 		List<PecaXadrex> pretas = capturadas.stream().filter(x -> x.getCor() == Cor.PRETO).collect(Collectors.toList());
-		
+
 		System.out.println("Pecas capturadas:");
 		System.out.print("Brancas: ");
 		System.out.print(ANSI_WHITE);

@@ -41,7 +41,9 @@ public class Program {
 					capturadas.add(pecaCapturada);
 				}
 
-			} catch (ExcecoesXadrex e) {
+			}
+
+			catch (ExcecoesXadrex e) {
 				System.out.println(e.getMessage());
 				sc.nextLine();
 			} catch (InputMismatchException e) {
@@ -50,4 +52,5 @@ public class Program {
 			}
 		}
 	}
+
 }

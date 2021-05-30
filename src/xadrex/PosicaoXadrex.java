@@ -9,7 +9,7 @@ public class PosicaoXadrex {
 
 	public PosicaoXadrex(char coluna, int linha) {
 		if (coluna < 'a' || coluna > 'h' || linha < 1 || linha > 8) {
-			throw new ExcecoesXadrex("Erro ao instanciar a posicao:" + " os valores validos são de a1 até h8.");
+			throw new ExcecoesXadrex("Erro ao instanciar a posicao:" + " os valores validos sao de a1 ate h8.");
 		}
 		this.coluna = coluna;
 		this.linha = linha;
@@ -28,7 +28,7 @@ public class PosicaoXadrex {
 	}
 
 	protected static PosicaoXadrex fromPosicao(Posicao posicao) {
-		return new PosicaoXadrex((char) ('a' - posicao.getColuna()), 8 - posicao.getLinha());
+		return new PosicaoXadrex((char) ('a' + posicao.getColuna()), 8 - posicao.getLinha());
 	}
 	
 	@Override
