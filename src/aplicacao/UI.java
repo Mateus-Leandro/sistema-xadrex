@@ -58,12 +58,20 @@ public class UI {
 		printPecasCapturadas(capturadas);
 		System.out.println();
 		System.out.println("Turno: " + partida.getTurno());
-		System.out.println("Esperando jogador: " + partida.getJogadorAtual());
-		if (partida.getcheck()) {
+		if (!partida.getCheckMate()) {
+			System.out.println("Esperando jogador: " + partida.getJogadorAtual());
+			if (partida.getcheck()) {
+				System.out.println(ANSI_RED_BACKGROUND);
+				System.out.print("CHECK!");
+				System.out.println(ANSI_RESET);
+			}
+		} else {
 			System.out.println(ANSI_RED_BACKGROUND);
-			System.out.print("CHECK!");
+			System.out.println("CHECKMATE!");
 			System.out.println(ANSI_RESET);
+			System.out.println("Ganhador: " + partida.getJogadorAtual());
 		}
+
 	}
 
 	public static void printTabuleiro(PecaXadrex[][] pecas, boolean check) {
@@ -98,10 +106,10 @@ public class UI {
 		}
 
 		else {
-			if(peca.getEstadoCheck()){
+			if (peca.getEstadoCheck()) {
 				System.out.print(ANSI_RED_BACKGROUND + peca + ANSI_RESET);
 			}
-			
+
 			else if (peca.getCor() == Cor.BRANCO) {
 				System.out.print(ANSI_WHITE + peca + ANSI_RESET);
 			}

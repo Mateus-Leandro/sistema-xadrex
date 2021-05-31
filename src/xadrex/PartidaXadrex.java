@@ -36,16 +36,15 @@ public class PartidaXadrex {
 	public Cor getJogadorAtual() {
 		return jogadorAtual;
 	}
-	
-	
+
 	public boolean getcheck() {
 		return check;
 	}
 
-	public boolean getcheckMate() {
+	public boolean getCheckMate() {
 		return checkMate;
 	}
-	
+
 	public PecaXadrex[][] getPecas() {
 		PecaXadrex[][] mat = new PecaXadrex[tabuleiro.getLinhas()][tabuleiro.getColunas()];
 		for (int l = 0; l < tabuleiro.getLinhas(); l++) {
@@ -68,15 +67,19 @@ public class PartidaXadrex {
 		validarPosicaoOrigem(origem);
 		validarPosicaoDestino(origem, destino);
 		Peca capturaPeca = moverPeca(origem, destino);
-		
-		if(testeCheck(jogadorAtual)) {
+
+		if (testeCheck(jogadorAtual)) {
 			desfazerMovimento(origem, destino, capturaPeca);
 			throw new ExcecoesXadrex("Voce nao pode se colocar em check!");
 		}
-		
+
 		check = (testeCheck(oponente(jogadorAtual))) ? true : false;
-		
-		proximoTurno();
+
+		if (testeCheckMate(oponente(jogadorAtual))) {
+			checkMate = true;
+		} else {
+			proximoTurno();
+		}
 		return (PecaXadrex) capturaPeca;
 	}
 
@@ -96,7 +99,7 @@ public class PartidaXadrex {
 	private void desfazerMovimento(Posicao origem, Posicao destino, Peca pecaCapturada) {
 		Peca p = tabuleiro.removerPeca(destino);
 		tabuleiro.ColocarPeca(p, origem);
-	
+
 		if (pecaCapturada != null) {
 			tabuleiro.ColocarPeca(pecaCapturada, destino);
 			pecasCapturadas.remove(pecaCapturada);
@@ -158,6 +161,32 @@ public class PartidaXadrex {
 		return false;
 	}
 
+	private boolean testeCheckMate(Cor cor) {
+		if (!testeCheck(cor)) {
+			return false;
+		}
+		List<Peca> list = pecasDoTabuleiro.stream().filter(x -> ((PecaXadrex) x).getCor() == cor)
+				.collect(Collectors.toList());
+		for (Peca p : list) {
+			boolean[][] mat = p.movimentosPossiveis();
+			for (int i = 0; i < tabuleiro.getLinhas(); i++) {
+				for (int j = 0; j < tabuleiro.getColunas(); j++) {
+					if (mat[i][j]) {
+						Posicao origem = ((PecaXadrex) p).getPosicaoXadrex().toPosicao();
+						Posicao destino = new Posicao(i, j);
+						Peca pecaCapturada = moverPeca(origem, destino);
+						boolean testeCheck = testeCheck(cor);
+						desfazerMovimento(origem, destino, pecaCapturada);
+						if (!testeCheck) {
+							return false;
+						}
+					}
+				}
+			}
+		}
+		return true;
+	}
+
 	private void colocarNovaPeca(char coluna, int linha, PecaXadrex peca) {
 		tabuleiro.ColocarPeca(peca, new PosicaoXadrex(coluna, linha).toPosicao());
 		pecasDoTabuleiro.add(peca);
@@ -167,10 +196,9 @@ public class PartidaXadrex {
 		colocarNovaPeca('h', 7, new Torre(tabuleiro, Cor.BRANCO));
 		colocarNovaPeca('d', 1, new Torre(tabuleiro, Cor.BRANCO));
 		colocarNovaPeca('e', 1, new Rei(tabuleiro, Cor.BRANCO));
-		
 
 		colocarNovaPeca('b', 8, new Torre(tabuleiro, Cor.PRETO));
 		colocarNovaPeca('a', 8, new Rei(tabuleiro, Cor.PRETO));
-		
+
 	}
 }
