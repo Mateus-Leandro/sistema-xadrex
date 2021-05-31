@@ -6,6 +6,7 @@ import xadrex.Cor;
 import xadrex.PecaXadrex;
 
 public class Rei extends PecaXadrex {
+	
 
 	public Rei(Tabuleiro tabuleiro, Cor cor) {
 		super(tabuleiro, cor);
@@ -15,7 +16,7 @@ public class Rei extends PecaXadrex {
 	public String toString() {
 		return "R";
 	}
-
+	
 	private boolean podeMover(Posicao posicao) {
 		PecaXadrex p = (PecaXadrex) getTabuleiro().peca(posicao);
 		return p == null || p.getCor() != getCor();

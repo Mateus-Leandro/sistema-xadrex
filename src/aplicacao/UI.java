@@ -98,7 +98,11 @@ public class UI {
 		}
 
 		else {
-			if (peca.getCor() == Cor.BRANCO) {
+			if(peca.getEstadoCheck()){
+				System.out.print(ANSI_RED_BACKGROUND + peca + ANSI_RESET);
+			}
+			
+			else if (peca.getCor() == Cor.BRANCO) {
 				System.out.print(ANSI_WHITE + peca + ANSI_RESET);
 			}
 
