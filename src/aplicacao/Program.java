@@ -18,6 +18,8 @@ public class Program {
 		PartidaXadrex partida = new PartidaXadrex();
 		List<PecaXadrex> capturadas = new ArrayList<>();
 
+		UI novaUI = new UI();
+
 		while (!partida.getCheckMate()) {
 			try {
 				UI.limparTela();
@@ -41,9 +43,15 @@ public class Program {
 					capturadas.add(pecaCapturada);
 				}
 
-			}
+				if (partida.getPromocao() != null) {
 
-			catch (ExcecoesXadrex e) {
+					System.out.println("Informe a peca que deseja " + novaUI.ANSI_YELLOW + "inserir no lugar do peao "
+							+ novaUI.ANSI_RESET + "promovido: " + novaUI.ANSI_YELLOW + "(T/B/R/C)" + novaUI.ANSI_RESET);
+					String tipo = sc.nextLine();
+					partida.trocarPecaPromocao(tipo);
+				}
+
+			} catch (ExcecoesXadrex e) {
 				System.out.println(e.getMessage());
 				sc.nextLine();
 			} catch (InputMismatchException e) {
