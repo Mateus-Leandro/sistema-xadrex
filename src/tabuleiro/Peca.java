@@ -3,7 +3,7 @@ package tabuleiro;
 public abstract class Peca {
 	protected Posicao posicao;
 	private Tabuleiro tabuleiro;
-	private boolean estadoCheck;
+	private boolean estadoCheck = false;
 
 	public Peca(Tabuleiro tabuleiro) {
 		this.tabuleiro = tabuleiro;
@@ -12,14 +12,6 @@ public abstract class Peca {
 
 	protected Tabuleiro getTabuleiro() {
 		return tabuleiro;
-	}
-	
-	public void setEstadoCheck(boolean estadoCheck) {
-		this.estadoCheck = estadoCheck;
-	}
-	
-	public boolean getEstadoCheck() {
-		return estadoCheck;
 	}
 
 	public abstract boolean[][] movimentosPossiveis();

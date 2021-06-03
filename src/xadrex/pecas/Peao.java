@@ -47,7 +47,7 @@ public class Peao extends PecaXadrex {
 				mat[p.getLinha()][p.getColuna()] = true;
 			}
 			p.setPosicao(posicao.getLinha() + 2, posicao.getColuna());
-			Posicao p2 = new Posicao(posicao.getLinha() - +1, posicao.getColuna());
+			Posicao p2 = new Posicao(posicao.getLinha() + 1, posicao.getColuna());
 			if (getTabuleiro().existePosicao(p) && !getTabuleiro().possuiPecaPosicao(p)
 					&& getTabuleiro().existePosicao(p2) && !getTabuleiro().possuiPecaPosicao(p2)
 					&& getContadorDeMovimentos() == 0) {
