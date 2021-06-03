@@ -76,24 +76,32 @@ public class UI {
 
 	public static void printTabuleiro(PecaXadrex[][] pecas, boolean check) {
 		for (int l = 0; l < pecas.length; l++) {
+			System.out.print(ANSI_YELLOW);
 			System.out.print((8 - l) + " ");
+			System.out.print(ANSI_RESET);
 			for (int c = 0; c < pecas.length; c++) {
 				printPeca(pecas[l][c], false);
 			}
 			System.out.println();
 		}
-		System.out.println("  a b c d e f g h");
+		System.out.print(ANSI_YELLOW);
+		System.out.print("  a b c d e f g h");
+		System.out.print(ANSI_RESET);
 	}
 
 	public static void printTabuleiro(PecaXadrex[][] pecas, boolean[][] movimentosPossiveis) {
 		for (int l = 0; l < pecas.length; l++) {
+			System.out.print(ANSI_YELLOW);
 			System.out.print((8 - l) + " ");
+			System.out.print(ANSI_RESET);
 			for (int c = 0; c < pecas.length; c++) {
 				printPeca(pecas[l][c], movimentosPossiveis[l][c]);
 			}
 			System.out.println();
 		}
-		System.out.println("  a b c d e f g h");
+		System.out.print(ANSI_YELLOW);
+		System.out.print("  a b c d e f g h");
+		System.out.print(ANSI_RESET);
 	}
 
 	private static void printPeca(PecaXadrex peca, boolean background) {
@@ -106,12 +114,16 @@ public class UI {
 		}
 
 		else {
-			if (peca.getCor() == Cor.BRANCO) {
+			
+			if(peca instanceof Rei){
+				System.out.print(ANSI_GREEN + peca + ANSI_RESET);
+			}
+			else if (peca.getCor() == Cor.BRANCO) {
 				System.out.print(ANSI_WHITE + peca + ANSI_RESET);
 			}
 
 			else {
-				System.out.print(ANSI_YELLOW + peca + ANSI_RESET);
+				System.out.print(ANSI_PURPLE + peca + ANSI_RESET);
 			}
 		}
 
@@ -123,14 +135,16 @@ public class UI {
 				.collect(Collectors.toList());
 		List<PecaXadrex> pretas = capturadas.stream().filter(x -> x.getCor() == Cor.PRETO).collect(Collectors.toList());
 
-		System.out.println("Pecas capturadas:");
+		System.out.println(ANSI_YELLOW);
+		System.out.println("\nPecas capturadas:");
+		System.out.print(ANSI_RESET);
 		System.out.print("Brancas: ");
 		System.out.print(ANSI_WHITE);
 		System.out.print(Arrays.toString(brancas.toArray()));
 		System.out.println(ANSI_RESET);
 
 		System.out.print("Pretas: ");
-		System.out.print(ANSI_YELLOW);
+		System.out.print(ANSI_PURPLE);
 		System.out.print(Arrays.toString(pretas.toArray()));
 		System.out.println(ANSI_RESET);
 	}
