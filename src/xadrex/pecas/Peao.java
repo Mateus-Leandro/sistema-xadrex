@@ -3,12 +3,16 @@ package xadrex.pecas;
 import tabuleiro.Posicao;
 import tabuleiro.Tabuleiro;
 import xadrex.Cor;
+import xadrex.PartidaXadrex;
 import xadrex.PecaXadrex;
 
 public class Peao extends PecaXadrex {
 
-	public Peao(Tabuleiro tabuleiro, Cor cor) {
+	private PartidaXadrex partida;
+
+	public Peao(Tabuleiro tabuleiro, Cor cor, PartidaXadrex partida) {
 		super(tabuleiro, cor);
+		this.partida = partida;
 	}
 
 	@Override
@@ -39,6 +43,21 @@ public class Peao extends PecaXadrex {
 			if (getTabuleiro().existePosicao(p) && pecaDoOponente(p)) {
 				mat[p.getLinha()][p.getColuna()] = true;
 			}
+
+			// #specialmove en passant brancas
+			if (posicao.getLinha() == 3) {
+				Posicao esquerda = new Posicao(posicao.getLinha(), posicao.getColuna() - 1);
+				if (getTabuleiro().existePosicao(esquerda) && pecaDoOponente(esquerda)
+						&& getTabuleiro().peca(esquerda) == partida.getVuneravelEnPassant()) {
+					mat[esquerda.getLinha() - 1][esquerda.getColuna()] = true;
+				}
+
+				Posicao direita = new Posicao(posicao.getLinha(), posicao.getColuna() + 1);
+				if (getTabuleiro().existePosicao(direita) && pecaDoOponente(direita)
+						&& getTabuleiro().peca(direita) == partida.getVuneravelEnPassant()) {
+					mat[direita.getLinha() - 1][direita.getColuna()] = true;
+				}
+			}
 		}
 
 		else {
@@ -63,11 +82,24 @@ public class Peao extends PecaXadrex {
 			if (getTabuleiro().existePosicao(p) && pecaDoOponente(p)) {
 				mat[p.getLinha()][p.getColuna()] = true;
 			}
+			// #specialmove en passant pretas
+			if (posicao.getLinha() == 4) {
+				Posicao esquerda = new Posicao(posicao.getLinha(), posicao.getColuna() - 1);
+				if (getTabuleiro().existePosicao(esquerda) && pecaDoOponente(esquerda)
+						&& getTabuleiro().peca(esquerda) == partida.getVuneravelEnPassant()) {
+					mat[esquerda.getLinha() + 1][esquerda.getColuna()] = true;
+				}
 
+				Posicao direita = new Posicao(posicao.getLinha(), posicao.getColuna() + 1);
+				if (getTabuleiro().existePosicao(direita) && pecaDoOponente(direita)
+						&& getTabuleiro().peca(direita) == partida.getVuneravelEnPassant()) {
+					mat[direita.getLinha() + 1][direita.getColuna()] = true;
+				}
+			}
 		}
 		return mat;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "P";
