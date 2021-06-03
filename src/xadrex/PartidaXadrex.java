@@ -1,11 +1,8 @@
 package xadrex;
 
-import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import org.omg.CORBA.PolicyErrorCodeHelper;
 
 import tabuleiro.Peca;
 import tabuleiro.Posicao;
@@ -125,8 +122,8 @@ public class PartidaXadrex {
 		if(promocao == null) {
 			throw new IllegalStateException("Nao ha peca para ser promovida!");
 		}
-		if(!tipo.equalsIgnoreCase("R") && !tipo.equalsIgnoreCase("T") && !tipo.equalsIgnoreCase("C") && !tipo.equalsIgnoreCase("B")) {
-			throw new InvalidParameterException("Tipo invalido para promocao!");
+		if(!tipo.equals("R") && !tipo.equals("T") && !tipo.equals("C") && !tipo.equals("B")) {
+			return promocao;
 		}
 		
 		Posicao pos = promocao.getPosicaoXadrex().toPosicao();
@@ -142,9 +139,9 @@ public class PartidaXadrex {
 	
 	
 	private PecaXadrex novaPeca(String tipo, Cor cor) {
-		if(tipo.equalsIgnoreCase("R")) return new Rainha(tabuleiro, cor);
-		if(tipo.equalsIgnoreCase("T")) return new Torre(tabuleiro, cor);
-		if(tipo.equalsIgnoreCase("C")) return new Cavalo(tabuleiro, cor);
+		if(tipo.equals("R")) return new Rainha(tabuleiro, cor);
+		if(tipo.equals("T")) return new Torre(tabuleiro, cor);
+		if(tipo.equals("C")) return new Cavalo(tabuleiro, cor);
 		return new Bispo(tabuleiro, cor);
 	}
 	

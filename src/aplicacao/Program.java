@@ -47,7 +47,15 @@ public class Program {
 
 					System.out.println("Informe a peca que deseja " + novaUI.ANSI_YELLOW + "inserir no lugar do peao "
 							+ novaUI.ANSI_RESET + "promovido: " + novaUI.ANSI_YELLOW + "(T/B/R/C)" + novaUI.ANSI_RESET);
-					String tipo = sc.nextLine();
+					String tipo = sc.nextLine().toUpperCase();
+
+					while (!tipo.equals("R") && !tipo.equals("T") && !tipo.equals("C") && !tipo.equals("B")) {
+						System.out.println("\nValor invalido!");
+						System.out.println("Informe a peca que deseja " + novaUI.ANSI_YELLOW
+								+ "inserir no lugar do peao " + novaUI.ANSI_RESET + "promovido: " + novaUI.ANSI_YELLOW
+								+ "(T/B/R/C)" + novaUI.ANSI_RESET);
+						tipo = sc.nextLine().toUpperCase();
+					}
 					partida.trocarPecaPromocao(tipo);
 				}
 
